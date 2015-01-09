@@ -3,7 +3,14 @@
   var diffAngles, keys, queryOculusAngles, setOculusAngle, attack;
   var score = 0;
   var isGame = false;
-  var timer = new Timer(120,end);
+  var timer = new Timer(120,
+    function(){
+      if(isGame == true){
+      console.log('END');
+      isGame = false;
+      console.log(score);
+      }
+    });
 
   window.socket = new Faye.Client("/faye", {
     timeout: 1,
@@ -181,14 +188,11 @@
       isGame = true;
       score = 0;
       timer.start();
-    }
-  };
-
-  end = function() {
-    if(isGame == true){
-      console.log('END');
-      isGame = false;
-      console.log(score);
+      setInterval(100,
+        function(){
+          $('.remain-time').text(timer.get_time());
+        }
+      );
     }
   };
 
