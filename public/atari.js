@@ -1,17 +1,18 @@
 
-var w = 400;
-var h = 300;
 var degradation = 1.0;
 var hit_color_rate = 0.1;
 var cri_color_rate = 0.5
-var hit_threshold = w * h * degradation * hit_color_rate * 255;
-var cri_threshold = w * h * degradation * cri_threshold * 255;
+
 
 function pHit(){
     var canvas = $('#oculus-stream canvas')[0];
+    var w = canvas.width;
+    var h = canvas.height;
     var cc = canvas.getContext('2d');
     var img = cc.getImageData(0, 0, w, h);
 
+    var hit_threshold = w * h * degradation * hit_color_rate * 255;
+    var cri_threshold = w * h * degradation * cri_threshold * 255;
     
     var acc_r = 0;
     var acc_g = 0;
@@ -22,6 +23,10 @@ function pHit(){
 	acc_g += img.data[i+1];
 	acc_b += img.data[i+2];
     }
+
+    // ave_r = acc_r / (w * h);
+    // ave_g = acc_g / (w * h);
+    // ave_b = acc_b / (w * h);
 
     if(acc_r/acc_g < 2.0 || acc_r/acc_b < 2.0){
 	return 0;
