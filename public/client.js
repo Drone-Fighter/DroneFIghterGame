@@ -2,6 +2,8 @@
 (function() {
   var diffAngles, keys, queryOculusAngles, setOculusAngle, attack;
   var score = 0;
+  var isGame = false;
+  var timer = new Timer(120,end);
 
   window.socket = new Faye.Client("/faye", {
     timeout: 1,
@@ -158,17 +160,36 @@
   };
 
   attack = function() {
-    var res = pHit();
-    console.log(res);
-    if (res == 1) {
-      $('#audio_hit').get(0).play();
-      score += 1;
-    } else if (res == 2) {
-      $('#audio_chit').get(0).play();
-      score += 5;
-    }
+    if(isGame){
+      var res = pHit();
+      console.log(res);
+      if (res == 1) {
+        $('#audio_hit').get(0).play();
+        score += 1;
+      } else if (res == 2) {
+        $('#audio_chit').get(0).play();
+        score += 5;
+      }
 
-    $('#oculus-osd-left').html(score);
+      $('#oculus-osd-left').html(score);
+    }
+  };
+
+  start = function() {
+    if(isGame == false){
+      console.log('START');
+      isGame = true;
+      score = 0;
+      timer.start();
+    }
+  };
+
+  end = function() {
+    if(isGame == true){
+      console.log('END');
+      isGame = false;
+      console.log(score);
+    }
   };
 
   window.diffOculusAngle = function() {
@@ -359,6 +380,9 @@
     84: {
       event: attack
     },
+    13: {
+      event: start
+    }
   };
 
   $(document).keydown(function(e) {
