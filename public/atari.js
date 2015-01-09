@@ -1,37 +1,49 @@
 
 var w = 400;
 var h = 300;
-var degradation = 0.5;
+var degradation = 1.0;
 var hit_color_rate = 0.1;
 var cri_color_rate = 0.5
-var hit_threshold = w * h * degradation * hit_color_rate;
-var cri_threshold = w * h * degradation * cri_threshold;
+var hit_threshold = w * h * degradation * hit_color_rate * 255;
+var cri_threshold = w * h * degradation * cri_threshold * 255;
 
 function pHit(){
-  var canvas = $('#oculus-stream canvas')[0];
-  var cc = canvas.getContext('2d');
-  var img = cc.getImageData(0, 0, w, h);
+    var canvas = $('#oculus-stream canvas')[0];
+    var cc = canvas.getContext('2d');
+    var img = cc.getImageData(0, 0, w, h);
 
-  var acc = 0;
-  for(var i = 0; i < w * h; i+=4){
-    acc += img.data[i];
-  }
-  console.log(acc);
-  if(acc < cri_threshold){
-    return 2;
-  }
-  else if(acc < hit_threshold){
-    return 1;
-  }
-  else{
-    return 0;
-  }
+    
+    var acc_r = 0;
+    var acc_g = 0;
+    var acc_b = 0;
+    
+    for(var i = 0; i < w * h; i+=4){
+	acc_r += img.data[i];
+	acc_g += img.data[i+1];
+	acc_b += img.data[i+2];
+    }
+
+    if(acc_r/acc_g < 2.0 || acc_r/acc_b < 2.0){
+	return 0;
+    }
+    else{
+	if(acc_r/acc_g > 3.0 || acc_r/acc_b > 3.0){
+	    return 2;
+	}
+	else{
+	    return 1;
+	}
+    }
 }
 
 function shoot(){
     var res = document.getElementById('result');
-    if(pHit()){
-	res.innerText = "Hit!";
+    var p = pHit()
+    if(p < cri_threshold){
+	res.innerText = "critical!";
+    }
+    else if(p < hit_threshold){
+	res.innerText = "hit!";
     }
     else{
 	res.innerText = "miss";
