@@ -11,8 +11,7 @@ function pHit(){
     var cc = canvas.getContext('2d');
     var img = cc.getImageData(0, 0, w, h);
 
-    var hit_threshold = w * h * degradation * hit_color_rate * 255;
-    var cri_threshold = w * h * degradation * cri_threshold * 255;
+    var max = w * h * 255;
     
     var acc_r = 0;
     var acc_g = 0;
@@ -24,21 +23,21 @@ function pHit(){
 	acc_b += img.data[i+2];
     }
 
-    // ave_r = acc_r / (w * h);
-    // ave_g = acc_g / (w * h);
-    // ave_b = acc_b / (w * h);
+    var rd = acc_r / max;
+    var gd = acc_g / max;
+    var bd = acc_b / max;
+    
 
-    if(acc_r/acc_g < 2.0 || acc_r/acc_b < 2.0){
-	return 0;
+    if(rd > 0.8 && gd < 0.3 && bd < 0.3){
+	return 2;
+    }
+    else if(rd > 0.6 && gd < 0.3 && bd < 0.3){
+	return 1;
     }
     else{
-	if(acc_r/acc_g > 3.0 || acc_r/acc_b > 3.0){
-	    return 2;
-	}
-	else{
-	    return 1;
-	}
+	return 0;
     }
+
 }
 
 function shoot(){
