@@ -1,0 +1,9 @@
+{
+  "name": "oculus-drone",
+  "description": "Oculus Rift + AR Drone 2.0 controller",
+  "version": "0.1.0",
+  "dependencies": {
+    "jquery": "~1.7.2",
+    "bootstrap.css": "~2.1.1"
+  }
+}
