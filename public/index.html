@@ -10,6 +10,8 @@
     <script src="/faye/client.js"></script>
     <script src="/drone.js"></script>
     <script src="/dronestream/nodecopter-client.js"></script>
+    <script src="/timer.js"></script>
+    <script src="/atari.js"></script>
     <script src="/client.js"></script>
     <audio id="audio_BGM" autoplay="autoplay" loop="loop"><source src="/BGM.mp3"></audio>
     <audio id="audio_hit"><source src="/get.mp3"></audio>
@@ -21,12 +23,16 @@
     <div id="drones"></div>
     <div id="oculus-stream">
       <div id="oculus-left" class="oculus-eye">
+        <div id="score-left" class="score"></div>
+        <div id="remain-time-left" class="remain-time"></div>
         <div id="oculus-osd-left" class="oculus-osd">OCULUS RIFT ENABLED</div>
         <div id="oculus-control-left" class="oculus-control">
           <div id="oculus-control-pad-left" class="oculus-control-pad"></div>
         </div>
       </div>
       <div id="oculus-right" class="oculus-eye">
+        <div id="score-right" class="score"></div>
+        <div id="remain-time-right" class="remain-time"></div>
         <div id="oculus-osd-right" class="oculus-osd">OCULUS RIFT ENABLED</div>
         <div id="oculus-control-right" class="oculus-control">
           <div id="oculus-control-pad-right" class="oculus-control-pad"></div>

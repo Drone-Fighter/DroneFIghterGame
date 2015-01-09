@@ -8,23 +8,24 @@ var hit_threshold = w * h * degradation * hit_color_rate;
 var cri_threshold = w * h * degradation * cri_threshold;
 
 function pHit(){
-    var canvas = $('#oculus-stream canvas')[0];
-    var cc = canvas.getContext('2d');
-    var img = cc.getImageData(0, 0, w, h);
-    
-    var acc = 0;
-    for(var i = 0; i < w * h; i+=4){
-	acc += img.data[i];
-    }
-    if(acc < cri_threshold){
-	return 2;
-    }
-    else if(acc < hit_threshold){
-	return 1;
-    }f
-    else{
-	return 0;
-    }
+  var canvas = $('#oculus-stream canvas')[0];
+  var cc = canvas.getContext('2d');
+  var img = cc.getImageData(0, 0, w, h);
+
+  var acc = 0;
+  for(var i = 0; i < w * h; i+=4){
+    acc += img.data[i];
+  }
+  console.log(acc);
+  if(acc < cri_threshold){
+    return 2;
+  }
+  else if(acc < hit_threshold){
+    return 1;
+  }
+  else{
+    return 0;
+  }
 }
 
 function shoot(){
