@@ -5,38 +5,50 @@ var cri_color_rate = 0.5
 
 
 function pHit(){
-    var canvas = $('#oculus-stream canvas')[0];
-    var w = canvas.width;
-    var h = canvas.height;
-    var cc = canvas.getContext('2d');
-    var img = cc.getImageData(0, 0, w, h);
+    var p = Math.random();
 
-    var max = w * h * 255;
-    
-    var acc_r = 0;
-    var acc_g = 0;
-    var acc_b = 0;
-    
-    for(var i = 0; i < w * h; i+=4){
-	acc_r += img.data[i];
-	acc_g += img.data[i+1];
-	acc_b += img.data[i+2];
-    }
-
-    var rd = acc_r / max;
-    var gd = acc_g / max;
-    var bd = acc_b / max;
-    
-
-    if(rd > 0.8 && gd < 0.3 && bd < 0.3){
+    if(p > 0.8){
 	return 2;
     }
-    else if(rd > 0.6 && gd < 0.3 && bd < 0.3){
+    else if(p > 0.5){
 	return 1;
     }
     else{
 	return 0;
     }
+
+    // var canvas = $('#oculus-stream canvas')[0];
+    // var w = canvas.width;
+    // var h = canvas.height;
+    // var cc = canvas.getContext('2d');
+    // var img = cc.getImageData(0, 0, w, h);
+
+    // var max = w * h * 255;
+    
+    // var acc_r = 0;
+    // var acc_g = 0;
+    // var acc_b = 0;
+    
+    // for(var i = 0; i < w * h; i+=4){
+    // 	acc_r += img.data[i];
+    // 	acc_g += img.data[i+1];
+    // 	acc_b += img.data[i+2];
+    // }
+
+    // var rd = acc_r / max;
+    // var gd = acc_g / max;
+    // var bd = acc_b / max;
+    
+
+    // if(rd > 0.8 && gd < 0.3 && bd < 0.3){
+    // 	return 2;
+    // }
+    // else if(rd > 0.6 && gd < 0.3 && bd < 0.3){
+    // 	return 1;
+    // }
+    // else{
+    // 	return 0;
+    // }
 
 }
 
